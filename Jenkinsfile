@@ -35,7 +35,10 @@ pipeline {
     }
     post {
         always {
-            junit testResults: 'Lab7a/jenkins-phpunit-test/logs/unitreport.xml'
+            // Ensure the logs directory exists and the report is in the expected location
+            dir('Lab7a/jenkins-phpunit-test/logs') {
+                junit testResults: 'unitreport.xml'
+            }
         }
     }
 }
