@@ -1,11 +1,11 @@
 pipeline {
     agent any
     stages {
-        stage ('Checkout') {
-            steps {
-                git branch:'master', url: 'https://github.com/ScaleSec/vulnado.git'
-            }
-        }
+        // stage ('Checkout') {
+        //     steps {
+        //         git branch:'Lab8', url: 'https://github.com/ScaleSec/vulnado.git'
+        //     }
+        // }
         stage ('Build') {
             steps {
                 sh '/var/jenkins_home/apache-maven-3.6.3/bin/mvn --batch-mode -V -U -e clean
