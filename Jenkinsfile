@@ -18,7 +18,18 @@ pipeline {
                 
             }
         }
-        stage('Deliver') {
+        stage('OWASP Dependency-Check Vulnerabilities') {
+            steps {
+                dependencyCheck additionalArguments: ''' 
+                            -o './'
+                            -s './'
+                            -f 'ALL' 
+                            --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+                
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+            }
+        /*stage('Deliver') {
             steps {
                 script {
                     // Convert line endings using tr for deliver.sh
@@ -39,6 +50,6 @@ pipeline {
                     sh './jenkins/scripts/kill_unix.sh'
                 }
             }
-        }
+        }*/
     }
 }
