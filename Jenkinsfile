@@ -2,18 +2,22 @@ pipeline {
     agent {
         docker {
             image 'composer:latest'
-            args '-v $WORKSPACE:/var/jenkins_home/workspace/testjenkin -w /var/jenkins_home/workspace/testjenkin/Lab7a/jenkins-phpunit-test'
+            args '-v $WORKSPACE:/var/jenkins_home/workspace/testjenkin'
         }
     }
     stages {
         stage('Build') {
             steps {
-                sh 'composer install'
+                dir('Lab7a/jenkins-phpunit-test') {
+                    sh 'composer install'
+                }
             }
         }
         stage('Test') {
             steps {
-                sh './vendor/bin/phpunit tests'
+                dir('Lab7a/jenkins-phpunit-test') {
+                    sh './vendor/bin/phpunit tests'
+                }
             }
         }
     }
