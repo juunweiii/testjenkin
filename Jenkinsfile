@@ -15,10 +15,14 @@ pipeline {
                 sh 'chmod +x ./jenkins/scripts/test_unix.sh'
                 // Execute the new script
                 sh './jenkins/scripts/test_unix.sh' 
-                // sh "chmod +x -R ${env.WORKSPACE}"
- 
-                // // Execute the script
-                // sh './jenkins/scripts/test.sh' 
+                
+            }
+        }
+        stage('Deliver') { 
+            steps {
+                sh './jenkins/scripts/deliver.sh' 
+                input message: 'Finished using the web site? (Click "Proceed" to continue)' 
+                sh './jenkins/scripts/kill.sh' 
             }
         }
     }
