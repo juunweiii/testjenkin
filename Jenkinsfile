@@ -1,55 +1,21 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Test') { 
-            steps {
-           
-                // Convert line endings using tr
-                sh 'tr -d "\\r" < ./jenkins/scripts/test.sh > ./jenkins/scripts/test_unix.sh'
-                // Ensure the new script has executable permissions
-                sh 'chmod +x ./jenkins/scripts/test_unix.sh'
-                // Execute the new script
-                sh './jenkins/scripts/test_unix.sh' 
-                
-            }
-        }
-        stage('OWASP Dependency-Check Vulnerabilities') {
-            steps {
-                dependencyCheck additionalArguments: ''' 
-                            -o './'
-                            -s './'
-                            -f 'ALL' 
-                            --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-                
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-            }
-            }
-        /*stage('Deliver') {
-            steps {
-                script {
-                    // Convert line endings using tr for deliver.sh
-                    sh 'tr -d "\\r" < ./jenkins/scripts/deliver.sh > ./jenkins/scripts/deliver_unix.sh'
-                    // Ensure the new script has executable permissions
-                    sh 'chmod +x ./jenkins/scripts/deliver_unix.sh'
-                    // Execute the deliver script
-                    sh './jenkins/scripts/deliver_unix.sh'
-                    
-                    // Pause for user confirmation
-                    input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                    
-                    // Convert line endings using tr for kill.sh
-                    sh 'tr -d "\\r" < ./jenkins/scripts/kill.sh > ./jenkins/scripts/kill_unix.sh'
-                    // Ensure the new script has executable permissions
-                    sh 'chmod +x ./jenkins/scripts/kill_unix.sh'
-                    // Execute the kill script
-                    sh './jenkins/scripts/kill_unix.sh'
-                }
-            }
-        }*/
-    }
+	agent any
+	stages {
+		stage('Checkout SCM') {
+			steps {
+				git '/Lab6/JenkinsDependencyCheckTest'
+			}
+		}
+
+		stage('OWASP DependencyCheck') {
+			steps {
+				dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'Default'
+			}
+		}
+	}	
+	post {
+		success {
+			dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+		}
+	}
 }
