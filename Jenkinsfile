@@ -19,7 +19,6 @@
 // 		}
 // 	}
 // }
-
 pipeline {
   agent any
   stages {
@@ -30,10 +29,15 @@ pipeline {
     }
     stage('OWASP Dependency-Check') {
       steps {
-        dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+        withCredentials([string(credentialsId: 'NVD-API-KEY', variable: 'NVD_API_KEY')]) {
+          dependencyCheck additionalArguments: """
+            --format HTML --format XML
+            --nvdApiKey ${NVD_API_KEY}
+          """, odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+        }
       }
     }
-  }  
+  }
   post {
     success {
       dependencyCheckPublisher pattern: 'dependency-check-report.xml'
