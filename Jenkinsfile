@@ -1,44 +1,19 @@
 pipeline {
-    agent any
-    stages {
-        stage('Clean Workspace') {
-            steps {
-                deleteDir()
+	agent {
+		docker {
+			image 'composer:latest'
+		}
+	}
+	stages {
+		stage('Build') {
+			steps {
+				sh 'composer install'
+			}
+		}
+		stage('Test') {
+			steps {
+                sh './vendor/bin/phpunit tests'
             }
-        }
-        stage('Build') {
-            agent {
-                docker {
-                    image 'composer:latest'
-                    args '-v $WORKSPACE:/var/jenkins_home/workspace/testjenkin'
-                }
-            }
-            steps {
-                dir('Lab7a/jenkins-phpunit-test') {
-                    sh 'composer install'
-                }
-            }
-        }
-        stage('Test') {
-            agent {
-                docker {
-                    image 'composer:latest'
-                    args '-v $WORKSPACE:/var/jenkins_home/workspace/testjenkin'
-                }
-            }
-            steps {
-                dir('Lab7a/jenkins-phpunit-test') {
-                    sh './vendor/bin/phpunit --log-junit logs/unitreport.xml -c tests/phpunit.xml tests'
-                }
-            }
-        }
-    }
-    post {
-        always {
-            // Ensure the logs directory exists and the report is in the expected location
-            dir('Lab7a/jenkins-phpunit-test/logs') {
-                junit testResults: 'unitreport.xml'
-            }
-        }
-    }
+		}
+	}
 }
