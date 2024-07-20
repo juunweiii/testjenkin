@@ -1,44 +1,33 @@
 pipeline {
     agent any
     stages {
-        stage('Clean Workspace') {
+        stage ('Checkout') {
             steps {
-                deleteDir()
+                git branch:'master', url: 'https://github.com/ScaleSec/vulnado.git'
             }
         }
-        stage('Build') {
-            agent {
-                docker {
-                    image 'composer:latest'
-                    args '-v $WORKSPACE:/var/jenkins_home/workspace/testjenkin'
-                }
-            }
+        stage ('Build') {
             steps {
-                dir('Lab7a/jenkins-phpunit-test') {
-                    sh 'composer install'
-                }
+                sh '/var/jenkins_home/apache-maven-3.6.3/bin/mvn --batch-mode -V -U -e clean
+                verify -Dsurefire.useFile=false -Dmaven.test.failure.ignore'
             }
         }
-        stage('Test') {
-            agent {
-                docker {
-                    image 'composer:latest'
-                    args '-v $WORKSPACE:/var/jenkins_home/workspace/testjenkin'
-                }
-            }
+        stage ('Analysis') {
             steps {
-                dir('Lab7a/jenkins-phpunit-test') {
-                    sh './vendor/bin/phpunit --log-junit logs/unitreport.xml -c tests/phpunit.xml tests'
-                }
+                sh '/var/jenkins_home/apache-maven-3.6.3/bin/mvn --batch-mode -V -U -e
+                checkstyle:checkstyle pmd:pmd pmd:cpd findbugs:findbugs'
             }
         }
     }
     post {
         always {
-            // Ensure the logs directory exists and the report is in the expected location
-            dir('Lab7a/jenkins-phpunit-test/logs') {
-                junit testResults: 'unitreport.xml'
-            }
+            junit testResults: '**/target/surefire-reports/TEST-*.xml'
+            recordIssues enabledForFailure: true, tools: [mavenConsole(), java(), javaDoc()]
+            recordIssues enabledForFailure: true, tool: checkStyle()
+            recordIssues enabledForFailure: true, tool: spotBugs(pattern:
+            '**/target/findbugsXml.xml')
+            recordIssues enabledForFailure: true, tool: cpd(pattern: '**/target/cpd.xml')
+            recordIssues enabledForFailure: true, tool: pmdParser(pattern: '**/target/pmd.xml')
         }
     }
 }
