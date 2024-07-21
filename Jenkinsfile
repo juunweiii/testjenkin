@@ -13,7 +13,7 @@ pipeline {
                     withSonarQubeEnv('SonarQube') {
                         sh "echo SonarQube Scanner Home: ${scannerHome}"
                         sh "echo Checking SonarQube Server Connectivity"
-                        sh "curl -v http://localhost:9000/api/server/version"
+                        sh "curl -v http://172.18.0.4:9000/api/server/version"
                         sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=."
                     }
                 }
