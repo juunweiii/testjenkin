@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'Lab9', url: 'https://github.com/juunweiii/testjenkin.git'
+                git branch: 'Main', url: 'https://github.com/juunweiii/testjenkin.git'
             }
         }
         stage('Code Quality Check via SonarQube') {
             steps {
-                dir('Lab9/') {  // Ensure you are in the correct directory
+                dir('QA/') {  // Ensure you are in the correct directory
                     script {
                         def scannerHome = tool 'SonarQube';
                         withSonarQubeEnv('SonarQube') {
