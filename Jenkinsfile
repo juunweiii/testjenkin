@@ -6,6 +6,11 @@ pipeline {
                 git branch: 'Lab9', url: 'https://github.com/juunweiii/testjenkin.git'
             }
         }
+        stage('Build') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
         stage('Code Quality Check via SonarQube') {
             steps {
                 script {
@@ -14,7 +19,7 @@ pipeline {
                         sh "echo SonarQube Scanner Home: ${scannerHome}"
                         sh "echo Checking SonarQube Server Connectivity"
                         sh "curl -v http://172.18.0.4:9000/api/server/version"
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=."
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=. -Dsonar.java.binaries=target/classes"
                     }
                 }
             }
