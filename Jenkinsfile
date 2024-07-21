@@ -1,44 +1,30 @@
 pipeline {
     agent any
     stages {
-        stage('Clean Workspace') {
+        stage('Checkout') {
             steps {
-                deleteDir()
+                git branch: 'Lab9', url: 'https://github.com/juunweiii/testjenkin.git'
             }
         }
-        stage('Build') {
-            agent {
-                docker {
-                    image 'composer:latest'
-                    args '-v $WORKSPACE:/var/jenkins_home/workspace/testjenkin'
-                }
-            }
+        stage('Code Quality Check via SonarQube') {
             steps {
-                dir('Lab7a/jenkins-phpunit-test') {
-                    sh 'composer install'
-                }
-            }
-        }
-        stage('Test') {
-            agent {
-                docker {
-                    image 'composer:latest'
-                    args '-v $WORKSPACE:/var/jenkins_home/workspace/testjenkin'
-                }
-            }
-            steps {
-                dir('Lab7a/jenkins-phpunit-test') {
-                    sh './vendor/bin/phpunit --log-junit logs/unitreport.xml -c tests/phpunit.xml tests'
+                dir('Lab9/') {  // Ensure you are in the correct directory
+                    script {
+                        def scannerHome = tool 'SonarQube';
+                        withSonarQubeEnv('SonarQube') {
+                            //sh "echo SonarQube Scanner Home: ${scannerHome}"
+                            //sh "echo Checking SonarQube Server Connectivity"
+                            //sh "curl -v http://172.18.0.4:9000/api/server/version"
+                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=."
+                        }
+                    }
                 }
             }
         }
     }
     post {
         always {
-            // Ensure the logs directory exists and the report is in the expected location
-            dir('Lab7a/jenkins-phpunit-test/logs') {
-                junit testResults: 'unitreport.xml'
-            }
+            recordIssues enabledForFailure: true, tool: sonarQube()
         }
     }
 }
