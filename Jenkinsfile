@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'Main', url: 'https://github.com/juunweiii/testjenkin.git'
+                git branch: 'main', url: 'https://github.com/juunweiii/testjenkin.git'
             }
         }
         stage('Code Quality Check via SonarQube') {
@@ -15,7 +15,7 @@ pipeline {
                             //sh "echo SonarQube Scanner Home: ${scannerHome}"
                             //sh "echo Checking SonarQube Server Connectivity"
                             //sh "curl -v http://172.18.0.4:9000/api/server/version"
-                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=."
+                            sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=QA -Dsonar.sources=."
                         }
                     }
                 }
