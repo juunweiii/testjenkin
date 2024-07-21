@@ -1,0 +1,217 @@
+pipeline {
+    agent any
+
+    environment {
+        repoUrl = 'git@github.com:Ik0nw/ICT2216-SSD.git'
+        branch = "${env.GIT_BRANCH.minus('origin/')}"
+        COMPOSE_FILE = 'docker-compose-standalone.yml'
+        COMPOSE_TEST_FILE = 'docker-compose-test.yml'
+        dashboard = 'https://sonar.threadhub.systems/dashboard?id=ICT2216-SSD'
+        ENV_FILE = '.compose.env'
+    }
+
+    stages {
+        stage('Checkout and Prepare Repository') {
+            steps {
+                sshagent(['GitHubCreds']) {
+                    script {
+                        if (fileExists('ICT2216-SSD')) {
+                            sh 'rm -rf ICT2216-SSD'
+                            echo 'Existing repository directory removed.'
+                        }
+                        sh "git clone ${repoUrl} ICT2216-SSD"
+                        dir('ICT2216-SSD') {
+                            sh "git checkout ${branch}"
+                            sh "git pull origin ${branch}"
+                            env.GIT_COMMITTER_NAME = sh(script: "git log -1 --pretty=format:'%cn'", returnStdout: true).trim()
+                        }
+                        echo 'Repository has been prepared. Committer: ${env.GIT_COMMITTER_NAME}'
+                    }
+                }
+            }
+        }
+
+        stage('Setup Environment Files and Clear Old Docker Data') {
+            steps {
+                withCredentials([
+                    file(credentialsId: 'env_keys', variable: 'ENV_KEYS'),
+                    file(credentialsId: 'compose_env_staging', variable: 'COMPOSE_ENV_STAGING'),
+                    file(credentialsId: 'frontend_env_keys', variable: 'FRONTEND_ENV_KEYS')
+                ]) {
+                    dir('ICT2216-SSD/devops') {
+                        sh "cp ${ENV_KEYS} .env.keys"
+                        sh "cp ${FRONTEND_ENV_KEYS} frontend.env.keys"
+                        sh "cp ${COMPOSE_ENV_STAGING} .compose.env"
+                        sh "ls -la"
+                        echo 'Environment files are set up.'
+                    }
+                    dir('/home/jenkins/cleanup') {
+                        sh "./docker_cleanup.sh"
+                        echo "Cleared past docker files (except MongoDB data)."
+                    }
+                }
+            }
+        }
+
+        stage('Parallel Execution') {
+            parallel {
+                stage('Static Code Analysis') {
+                    steps {
+                        script {
+                            withSonarQubeEnv('sonarqube') {
+                                sh 'sonar-scanner -Dsonar.projectKey=ICT2216-SSD'
+                            }
+                        }
+                    }
+                }
+
+                stage('Rebuild Docker Image') {
+                    steps {
+                        dir('ICT2216-SSD/devops') {
+                            sshagent(['GitHubCreds']) {
+                                sh "docker-compose -f $COMPOSE_FILE --env-file $ENV_FILE build"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Unit Test with Mocha on Testing Containers') {
+            steps {
+                dir('ICT2216-SSD/devops') {
+                    sshagent(['GitHubCreds']) {
+                        sh "docker-compose -f $COMPOSE_TEST_FILE --env-file $ENV_FILE down"
+                        sh "docker-compose -f $COMPOSE_TEST_FILE --env-file $ENV_FILE up -d"
+                        sleep time: 10000, unit: 'MILLISECONDS'
+                    }
+                }
+                dir('ICT2216-SSD/backend') {  
+                    sh "docker cp backend-standalone:/usr/src/app/SSD/backend/.env ."  
+                    sh "pnpm add -D mocha mocha-junit-reporter"  
+                    // sh "pnpm dotenvx run -- pnpm mocha -c --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/test-results.xml test/mocha/masteryTest.mjs --exit"  
+                    sh "pnpm dotenvx run -- pnpm mocha -c test/mocha/masteryTest.mjs --exit"  
+                }
+                dir('ICT2216-SSD/devops') {  
+                    script {  
+                        env.REDIS_PASSWORD = sh (  
+                            script: """awk -F'=' '/REDIS_PASSWORD=/ {printf "%s", \$2}' $ENV_FILE""",  
+                            returnStdout: true    
+                        ).trim()
+                    }  
+                    sh ". ./.compose.env"  
+                    script {
+                        RESULT = sh (
+                            // script: """/bin/bash -c redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --scan --pattern *127.0.0.1 --no-auth-warning | xargs redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --no-auth-warning del""",
+                            script: """/bin/bash -c redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --no-auth-warning FLUSHDB""",
+                            returnStdout: true
+                        )
+                    }
+                }
+                dir('/home/jenkins/cleanup') {
+                    sh "./docker_test_cleanup.sh"
+                    echo "Cleared past testing docker files (except MongoDB data)."
+                }
+            }
+        }
+
+        stage('Deploy Web Application') {
+            steps {
+                dir('ICT2216-SSD/devops') {
+                    sshagent(['GitHubCreds']) {
+                        sh "docker-compose -f $COMPOSE_FILE --env-file $ENV_FILE down"
+                        sh "docker-compose -f $COMPOSE_FILE --env-file $ENV_FILE up -d"
+                    }
+                }
+            }
+        }
+
+        // stage('Run Mocha Tests') {
+        //     steps {
+        //         dir('ICT2216-SSD/backend') {  
+        //             sh "docker cp backend-standalone:/usr/src/app/SSD/backend/.env ."  
+        //             sh "pnpm add -D mocha mocha-junit-reporter"  
+        //             sh "pnpm dotenvx run -- pnpm mocha -c --reporter mocha-junit-reporter --reporter-options mochaFile=./reports/test-results.xml test/mocha/masteryTest.mjs --exit"  
+        //         }
+
+        //         dir('ICT2216-SSD/devops') {  
+        //             script {  
+        //                 env.REDIS_PASSWORD = sh (  
+        //                     script: """awk -F'=' '/REDIS_PASSWORD=/ {printf "%s", \$2}' $ENV_FILE""",  
+        //                     returnStdout: true    
+        //                 ).trim()
+        //             }  
+        //             sh ". ./.compose.env"  
+        //             script {
+        //                 RESULT = sh (
+        //                     // script: """/bin/bash -c redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --scan --pattern *127.0.0.1 --no-auth-warning | xargs redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --no-auth-warning del""",
+        //                     script: """/bin/bash -c redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --no-auth-warning FLUSHDB""",
+        //                     returnStdout: true
+        //                 )
+        //             }
+        //         } 
+        //     }
+        // }
+    }
+
+    post {
+        always {
+            sh 'docker image prune -f'
+            echo 'Post-build cleanup complete.'
+        }
+        success {
+            script {
+                sendDiscordNotification('SUCCESS', 'Build sucess')
+                RESULT = sh (
+                            // script: """/bin/bash -c redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --scan --pattern *127.0.0.1 --no-auth-warning | xargs redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --no-auth-warning del""",
+                            script: """/bin/bash -c redis-cli --pass ${env.REDIS_PASSWORD} -n 1 --no-auth-warning FLUSHDB""",
+                            returnStdout: true
+                        )
+            }
+        }
+        failure {
+            script {
+                sendDiscordNotification('FAILURE', 'Build failed')
+            }
+        }
+        unstable {
+            script {
+                sendDiscordNotification('UNSTABLE', 'Build unstable')
+            }
+        }
+        aborted {
+            script {
+                sendDiscordNotification('ABORTED', 'Build aborted')
+            }
+        }
+    }
+}
+
+def sendDiscordNotification(result, message) {
+    def timestamp = new Date().format("yyyy-MM-dd HH:mm:ss")
+    def user = env.GIT_COMMITTER_NAME ?: "Unknown User"
+    def commitId = env.GIT_COMMIT ?: "Unknown Commit"
+    def commitMessage = sh(script: "git log -1 --pretty=%B", returnStdout: true).trim()
+    def buildNumber = env.BUILD_NUMBER ?: "Unknown Build Number"
+    def jobName = env.JOB_NAME ?: "Unknown Job"
+    def buildUrl = env.BUILD_URL ?: "No URL Available"
+    def dashboardUrl = env.dashboard ?: "No Dashboard URL Available"
+
+    withCredentials([string(credentialsId: 'discord_webhook', variable: 'WEBHOOK_URL')]) {
+        discordSend(
+            webhookURL: WEBHOOK_URL,
+            title: "Build Result - ${jobName} #${buildNumber}",
+            description: """
+                **Build Result:** ${result}
+                **Committer:** ${user}
+                **Commit ID:** ${commitId}
+                **Commit Message:** ${commitMessage}
+                **Build URL:** [View Build](${buildUrl})
+                **Dashboard:** [View Dashboard](${dashboardUrl})
+                **Message:** ${message}
+                **Timestamp:** ${timestamp}
+                """
+        )
+    }
+}
+

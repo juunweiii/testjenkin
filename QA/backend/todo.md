@@ -1,0 +1,30 @@
+- [x] API services
+  - [x] 2FA + nodemailer
+  - [x] Authentication
+  - [x] Topics
+  - [x] Sub topics
+  - [x] Threads
+  - [x] Users profiling
+    - [x] Reputation system
+    - [x] Population of subtopics and threads (total likes - dislikes)
+  - [x] Ban users
+- [x] Dockerfiles + docker compose
+- [x] JWT + auth (jose + fastify-cookie)
+- [ ] ~~Refresh token~~
+- [x] Authorization access control (casl or casbin)
+- [x] Sanitise input (schema)
+- [x] CSRF
+- [x] API Rate Limiting
+- [x] Redo dockerfile migrations when restarting containers, move migrations only to mongo container
+- [ ] ~~Recaptcha~~
+- [x] Redis
+  - [x] Caching
+  - [x] ~~Encrypt data in redis~~ Hash password before caching
+- [x] Centralise response
+- [x] Centralise error handling
+- [x] Logging
+  - [x] Pipeline to syslog
+  - [x] Integration with external log server (sentry or loki etc.)
+
+# DevOps
+- [x]  docker instances health check

@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+.more-topic-options,.dropdown button{
+    background-color: #fff;
+    color: #22577A;
+    border: none;
+    border-radius: 100px;
+    padding:10px;
+}
+
+.more-topic-options:hover{
+    background-color: #57cc99;
+    color: #fff;
+}
+
+.more-topic-options::after{
+    content:""!important;
+    display: none!important;
+}
+
+.topic-list-item-title-container .dropdown-item{
+    font-size:16px;
+}
+
+
+.topic-list-item {
+    display: flex;
+    padding:20px;
+    border-bottom: 1px solid #57cc99;
+    padding-left: 40px;
+}
+
+.topic-list-item img{
+    width:40px;
+    height:auto;
+}
+
+.topic-list-item a, .topic-list-item h3{
+    color: #22577A;
+    font-size: 21px;
+}
+
+.topic-list-item-link:hover,.topic-list-item:hover {
+    text-decoration: none;
+    background-color: #f3f3f3;
+}
+
+
+.topic-list-item-content{
+    margin-left:20px;
+    flex: 1;
+}
+
+.topic-list-item-content p{
+    margin:0px;
+    color: #000;
+    font-weight:400;
+}
+
+.topic-list-item-content p span{
+    color: #38a3a5;
+    font-weight: 700;
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.topic-list-item-icon {
+    display:flex;
+    align-self: start;
+}
+
+
+.edit-topic-modal div.mb-3{
+    padding:20px
+}
+
+.modal-btn {
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    background-color: #38A3A5;
+    border-radius: 20px;
+}
+
+.topic-list-item-title-container{
+    display: flex;
+    align-items: center;
+    margin-bottom:10px;
+    justify-content: space-between;
+}
+
+
+@media (max-width: 768px) {
+    .topic-list-item a, .topic-list-item h3{
+        font-size: 21px;
+    }
+}
+

@@ -1,0 +1,34 @@
+name: workflow for Node using Snyk
+
+on: push
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18' # Specify the Node.js version you are using
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+
+      - name: Authenticate with Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+
+      - name: Run Snyk to check for vulnerabilities and monitor
+        run: |
+          cd backend
+          snyk monitor --file=package.json
+          snyk test --file=package.json --severity-threshold=high
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

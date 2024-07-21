@@ -1,0 +1,211 @@
+name: backend-microservices
+
+services:
+  mongo:
+    image: mongo
+    env_file: 
+      - .compose.env
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+      - mongodb:/data/db
+    networks:
+      - backend
+    restart: on-failure:3
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${MONGO_INITDB_DATABASE}"
+
+  redis:
+    image: redis/redis-stack:latest
+    env_file:
+      - .compose.env
+    container_name: redis-stack
+    ports:
+      - 6379:6379
+    networks:
+      - backend
+    restart: on-failure:3
+    environment:
+      REDIS_ARGS: "--requirepass ${REDIS_PASSWORD}"
+
+  backend-auth:
+    env_file:
+      - .compose.env
+    container_name: backend-auth
+    ports:
+      - 3020:3020
+    volumes:
+      - auth_server:/usr/src/app/SSD/backend
+      - /var/log/ssd:/var/log/ssd
+    networks:
+      - backend
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    build:
+      args:
+        NODE_ENV: ${NODE_ENV}
+      context: .
+      target: ${NODE_ENV}
+      ssh:
+      - default
+      dockerfile: auth.dockerfile
+    depends_on:
+      - mongo
+      - redis
+    healthcheck:
+      test: "${HEALTH_CMD} \"{\\\"content\\\": \\\"\"backend-microservices-auth-status=$(curl -o /dev/null -s -w \"%{http_code}\" http://127.0.0.1:3020/api)\"\\\"}\" ${DISCORD_WEBHOOK_URL}"
+      interval: 1m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  backend-topics:
+    env_file:
+      - .compose.env
+    container_name: backend-topics
+    ports:
+      - 3030:3030
+    volumes:
+      - topics_server:/usr/src/app/SSD/backend
+      - /var/log/ssd:/var/log/ssd
+    networks:
+      - backend
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    build:
+      args:
+        NODE_ENV: ${NODE_ENV}
+      context: .
+      target: ${NODE_ENV}
+      ssh:
+      - default
+      dockerfile: topics.dockerfile
+    depends_on:
+      - mongo
+      - redis
+    healthcheck:
+      test: "${HEALTH_CMD} \"{\\\"content\\\": \\\"\"backend-microservices-topics-status=$(curl -o /dev/null -s -w \"%{http_code}\" http://127.0.0.1:3030/api)\"\\\"}\" ${DISCORD_WEBHOOK_URL}"
+      interval: 1m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  backend-subtopics:
+    env_file:
+      - .compose.env
+    container_name: backend-subtopics
+    ports:
+      - 3040:3040
+    volumes:
+      - subtopics_server:/usr/src/app/SSD/backend
+      - /var/log/ssd:/var/log/ssd
+    networks:
+      - backend
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    build:
+      args:
+        NODE_ENV: ${NODE_ENV}
+      context: .
+      target: ${NODE_ENV}
+      ssh:
+      - default
+      dockerfile: subtopics.dockerfile
+    depends_on:
+      - mongo
+      - redis
+    healthcheck:
+      test: "${HEALTH_CMD} \"{\\\"content\\\": \\\"\"backend-microservices-subtopics-status=$(curl -o /dev/null -s -w \"%{http_code}\" http://127.0.0.1:3040/api)\"\\\"}\" ${DISCORD_WEBHOOK_URL}"
+      interval: 1m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  backend-threads:
+    env_file:
+      - .compose.env
+    container_name: backend-threads
+    ports:
+      - 3050:3050
+    volumes:
+      - threads_server:/usr/src/app/SSD/backend
+      - /var/log/ssd:/var/log/ssd
+    networks:
+      - backend
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    build:
+      args:
+        NODE_ENV: ${NODE_ENV}
+      context: .
+      target: ${NODE_ENV}
+      ssh:
+      - default
+      dockerfile: threads.dockerfile
+    depends_on:
+      - mongo
+      - redis  
+    healthcheck:
+      test: "${HEALTH_CMD} \"{\\\"content\\\": \\\"\"backend-microservices-threads-status=$(curl -o /dev/null -s -w \"%{http_code}\" http://127.0.0.1:3050/api)\"\\\"}\" ${DISCORD_WEBHOOK_URL}"
+      interval: 1m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  backend-users:
+    env_file:
+      - .compose.env
+    container_name: backend-users
+    ports:
+      - 3060:3060
+    volumes:
+      - users_server:/usr/src/app/SSD/backend
+      - /var/log/ssd:/var/log/ssd
+    networks:
+      - backend
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    build:
+      args:
+        NODE_ENV: ${NODE_ENV}
+      context: .
+      target: ${NODE_ENV}
+      ssh:
+      - default
+      dockerfile: users.dockerfile
+    depends_on:
+      - mongo
+      - redis  
+    healthcheck:
+      test: "${HEALTH_CMD} \"{\\\"content\\\": \\\"\"backend-microservices-users-status=$(curl -o /dev/null -s -w \"%{http_code}\" http://127.0.0.1:3050/api)\"\\\"}\" ${DISCORD_WEBHOOK_URL}"
+      interval: 1m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    
+
+volumes:
+  mongodb:
+  auth_server:
+  topics_server:
+  subtopics_server:
+  threads_server:
+  users_server:
+
+networks:
+  backend:
+    external:
+      name: backend 
+    driver: bridge
+    attachable: true
+    driver_opts:
+      com.docker.network.bridge.name: backend

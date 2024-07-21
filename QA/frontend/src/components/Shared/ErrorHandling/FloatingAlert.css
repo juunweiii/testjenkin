@@ -1,0 +1,9 @@
+.floating-alert-container {
+    position: fixed;
+    bottom: 2vh;
+    right: 2vw; 
+    z-index: 1050; 
+    width: auto;
+    max-width: 300px;
+  }
+  

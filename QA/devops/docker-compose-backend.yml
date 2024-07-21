@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    env_file: 
+      - .compose.env
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+      - mongodb:/data/db
+    networks:
+      - backend
+    restart: on-failure:3
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${MONGO_INITDB_DATABASE}"
+
+  redis:
+    image: redis/redis-stack:latest
+    env_file:
+      - .compose.env
+    container_name: redis-stack
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    restart: on-failure:3
+    environment:
+      REDIS_ARGS: "--requirepass ${REDIS_PASSWORD}"
+
+  app:
+    env_file:
+      - .compose.env
+    container_name: backend-standalone
+    ports:
+      - "3010:3010"
+    volumes:
+      - server:/usr/src/app/SSD/backend
+      - /var/log/ssd:/var/log/ssd
+    networks:
+      - backend
+    restart: always
+    environment:
+      NODE_ENV: ${NODE_ENV}
+    build:
+      context: .
+      dockerfile: standalone.dockerfile
+      target: ${NODE_ENV}
+      args:
+        NODE_ENV: ${NODE_ENV}
+      ssh:
+        - default
+    depends_on:
+      - mongo
+      - redis
+    healthcheck:
+      test: "${HEALTH_CMD} \"{\\\"content\\\": \\\"\"backend-standalone-app-status=$(curl -o /dev/null -s -w \"%{http_code}\" http://127.0.0.1:3010/api)\"\\\"}\" ${DISCORD_WEBHOOK_URL}"
+      interval: 1m
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  mongodb:
+  server:
+
+networks:
+  backend:
+    driver: bridge
+    attachable: true

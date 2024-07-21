@@ -1,0 +1,121 @@
+.subtopics-page-container {
+  min-height: 100vh;
+  /*display: flex;*/
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-width: 1000px;
+  padding: 0px 20px;
+  margin:40px auto;
+  border-radius: 10px;
+  margin-top:-260px;
+}
+
+.subtopics-info h2 {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.subtopics-info , .sort-subtopics {
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.sort-subtopics ,.subtopics-info button, .topic-info{
+    margin-right: 10px;
+}
+
+.result-subtopics-info {
+    margin-top:30px;
+}
+
+.topic-info-row h1{
+  font-size: 24px;
+}
+
+.topic-info-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.topic-image img{
+  width:80px;
+  height:80px;
+  object-fit: fill;
+  margin-top: 0;
+  margin-right: 20px;
+}
+
+.title-container{
+  padding:40px;
+}
+
+.subtopics-page-container .back-link{
+  color: #38A3A5;
+  font-size: 18px;
+  margin-top:30px;
+  padding-left:20px;
+  padding-bottom: 20px;
+  display:block;
+  border-bottom: #38A3A5 1px solid;
+}
+
+.subtopics-page-container .dropdown-item{
+  font-size: 16px;
+}
+
+.new-subtopic-modal div.mb-3{
+  padding:20px
+}
+
+.sort-subtopics {
+
+  margin-bottom: 20px;
+}
+
+
+.modal-btn, .new-subtopic-btn {
+  padding: 8px 15px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  background-color: #38A3A5;
+  border-radius: 20px;
+}
+
+
+
+@media (max-width: 768px) {
+  .title-container{
+      padding: 30px 20px 20px 20px;
+  }
+
+  .subtopics-info-info{
+    margin-top:20px
+  }
+
+  .sort-subtopics {
+    width: 100%;
+    
+  }
+
+  .sort-dropdown {
+    margin-left: 10px;
+    min-width: 100px;
+  }
+  
+
+}
+
+@media (max-width: 500px) {
+  .title-container{
+    padding: 20px 10px;
+  }
+
+
+}
+

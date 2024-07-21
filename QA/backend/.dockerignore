@@ -1,0 +1,9 @@
+log*/
+node_modules/
+# .env
+# .env.local
+# .env.staging
+# .env.production
+# .env.keys
+.git
+.gitignore

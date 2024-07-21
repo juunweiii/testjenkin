@@ -1,0 +1,150 @@
+
+
+.search-form {
+    flex-grow: 1; 
+    margin: 0 20px;
+    justify-content: center;
+    margin:0 20px;
+}
+
+input.search-input {
+    border-radius: 20px;
+    border-left: none;
+    background-color: #f3f3f3;
+    
+}
+
+.profile-img{
+    width: 40px;
+    height: 40px;
+    border: #333333 1px solid ;
+    border-radius: 50px;
+    object-fit: cover;
+}
+
+nav .search-bar-icon{
+    background-color: #f3f3f3;
+    border-right: none;
+    padding-right:0;
+}
+
+button.home-btn{
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    background-color: #38A3A5;
+    border-radius: 20px;
+}
+
+button.home-btn:hover{
+    color: #22577A;
+    background-color: #57CC99;
+
+}
+
+.logo-img {
+    width: auto;
+    height:50px;
+}
+
+.nav-main {
+    border-bottom: 1px solid #57cc99;
+    padding:10px;
+    background-color: #fff;
+
+}
+
+.nav-container{
+    position: sticky;
+    z-index: 999;
+    top:0;
+}
+
+.upper-nav {
+    background-color: #22577A;
+    padding: 8px 0;
+    
+}
+
+.upper-nav-container{
+    display: flex;
+    justify-content: end;
+}
+
+.upper-nav a{
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    margin-left: 20px;
+
+}
+
+.nav-form{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-user-role{
+    font-size:12px;
+    color: #57cc99;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    position:relative;
+}
+
+.nav-actions{
+    align-items: center;
+}
+
+.search-form .dropdown-toggle{
+    border-radius: 40px;
+}
+
+.nav-user-picture{
+    text-align: center;
+}
+
+.page-content-background{    
+    background-color: #fff;
+    padding: 0px 20px;
+    border: 1px solid #57cc99;
+    border-radius: 10px;
+}
+
+
+
+@media (max-width: 768px) {
+    .nav-actions{
+        order:2;
+        flex-direction: row!important;
+        overflow: visible;
+        overflow-y: visible!important;
+        position: relative;
+    }
+    .search-form {
+        order:3;
+        margin:0;
+    }
+
+    .user-dropdown{
+        margin-right:10px;
+    }
+
+    .upper-nav-container{
+        justify-content: space-between;
+    }
+
+    .upper-nav-container a{
+        margin:0;
+        font-size: 14px;
+    }
+
+
+    .dropdown-menu.show{
+        position: absolute!important;
+    }
+}

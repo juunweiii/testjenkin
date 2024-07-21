@@ -1,0 +1,45 @@
+name: dependencies-only
+
+services:
+  mongo:
+    image: mongo
+    env_file: 
+      - .compose.env
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+      - mongodb:/data/db
+    networks:
+      - backend
+    restart: on-failure:3
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
+      MONGO_INITDB_DATABASE: "${MONGO_INITDB_DATABASE}"
+
+  redis:
+    image: redis/redis-stack:latest
+    env_file:
+      - .compose.env
+    container_name: redis-stack
+    ports:
+      - 6379:6379
+    networks:
+      - backend
+    restart: on-failure:3
+    environment:
+      REDIS_ARGS: "--requirepass ${REDIS_PASSWORD}"
+
+volumes:
+  mongodb:
+
+networks:
+  backend:
+    external:
+      name: backend 
+    driver: bridge
+    attachable: true
+    driver_opts:
+      com.docker.network.bridge.name: backend
