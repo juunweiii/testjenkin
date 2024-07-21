@@ -1,0 +1,17 @@
+{
+    "name": "testjenkin",
+    "version": "1.0.0",
+    "description": "A simple Node.js project for Jenkins testing",
+    "main": "src/index.js",
+    "scripts": {
+        "build": "echo 'Build step'",
+        "test": "echo 'Running tests' && exit 0"
+    },
+    "devDependencies": {},
+    "directories": {
+        "test": "tests"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Code Quality Check via SonarQube') {
             steps {
-                //dir('Lab7a/jenkins-phpunit-test') {  // Ensure you are in the correct directory
+                dir('Lab9/') {  // Ensure you are in the correct directory
                     script {
                         def scannerHome = tool 'SonarQube';
                         withSonarQubeEnv('SonarQube') {
@@ -18,7 +18,7 @@ pipeline {
                             sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=OWASP -Dsonar.sources=."
                         }
                     }
-               
+                }
             }
         }
     }
