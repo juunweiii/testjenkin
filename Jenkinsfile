@@ -10,8 +10,8 @@ pipeline {
             steps {
                 dir('./QA/') {  // Ensure you are in the correct directory
                     script {
-                        def scannerHome = tool 'SonarQube';
-                        withSonarQubeEnv('SonarQube') {
+                        def scannerHome = tool 'QA';
+                        withSonarQubeEnv('QA') {
                             //sh "echo SonarQube Scanner Home: ${scannerHome}"
                             //sh "echo Checking SonarQube Server Connectivity"
                             //sh "curl -v http://172.18.0.4:9000/api/server/version"
