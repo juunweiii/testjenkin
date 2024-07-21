@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Code Quality Check via SonarQube') {
             steps {
-                dir('QA/') {  // Ensure you are in the correct directory
+                dir('./QA/') {  // Ensure you are in the correct directory
                     script {
                         def scannerHome = tool 'SonarQube';
                         withSonarQubeEnv('SonarQube') {
