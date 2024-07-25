@@ -1,0 +1,79 @@
+name: Deploy Frontend and Backend (Group 34)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_KEY }}
+
+    - name: SSH into server, clone repository, and copy .env file
+      env:
+        SSH_KEY: ${{ secrets.SSH_KEY }}
+        HOST_IP: ${{ secrets.HOST_IP }}
+        NAME: ${{ secrets.NAME }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        ssh -o StrictHostKeyChecking=no $NAME@$HOST_IP << 'EOF'
+          cd ~
+          if [ ! -d repo ]; then
+            mkdir -p repo
+          fi
+          cd repo
+          rm -rf ./*
+          git clone https://${{ secrets.GH_TOKEN }}@github.com/farhanazmiCS/ICT2216-Secure-Software-Development-Group-34.git .
+          mv ../.env .
+        EOF
+
+    - name: SSH into server to create key.pem, cert.pem, and csr.pem certificates
+      env:
+        SSH_KEY: ${{ secrets.SSH_KEY }}
+        HOST_IP: ${{ secrets.HOST_IP }}
+        NAME: ${{ secrets.NAME }}
+      run: |
+        ssh -o StrictHostKeyChecking=no $NAME@$HOST_IP << 'EOF'
+          cd ~/repo
+          openssl req -new -newkey rsa:4096 -days 365 -nodes -x509 -keyout key.pem -out cert.pem -subj "/C=US/ST=State/L=City/O=Organization/OU=Unit/CN=common.name"
+          openssl req -new -key key.pem -out csr.pem -subj "/C=US/ST=State/L=City/O=Organization/OU=Unit/CN=common.name"
+          echo "CSR, Cert, and Key files created."
+          ls -la
+        EOF
+
+    - name: SSH into server to build frontend and backend
+      env:
+        SSH_KEY: ${{ secrets.SSH_KEY }}
+        HOST_IP: ${{ secrets.HOST_IP }}
+        NAME: ${{ secrets.NAME }}
+      run: |
+        ssh -o StrictHostKeyChecking=no $NAME@$HOST_IP << 'EOF'
+          cd ~/repo
+          npm install
+          npm run setup-start
+        EOF
+
+    - name: Copy frontend build files to the server
+      run: |
+        scp -r -o StrictHostKeyChecking=no client/build/* ${{ secrets.NAME }}@${{ secrets.HOST_IP }}:/var/www/html/
+
+    - name: Copy all files to the server root
+      run: |
+        scp -r -o StrictHostKeyChecking=no * ${{ secrets.NAME }}@${{ secrets.HOST_IP }}:~/
+
+    - name: SSH into server and restart services
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secrets.NAME }}@${{ secrets.HOST_IP }} << 'EOF'
+          cd ~
+          sudo cp -r repo/client/build/* /var/www/html/
+          sudo systemctl restart nginx
+        EOF

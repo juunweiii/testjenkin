@@ -1,0 +1,64 @@
+import React from 'react'
+import { usePetsContext } from '../context/pets_context'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import Error from './Error'
+import Loading from './Loading'
+import Pet from './Pet'
+const FeaturedPets = () => {
+  const {
+    pets_loading: loading,
+    pets_error: error,
+    featured_pets: featured,
+  } = usePetsContext()
+  if (loading) {
+    return <Loading />
+  }
+  if (error) {
+    return <Error />
+  }
+
+  const firstThreeFeaturedPets = Array.isArray(featured) ? featured.slice(0, 3) : []
+
+  return (
+    <Wrapper className='section'>
+      <div className='title'>
+        <h2>featured pets</h2>
+        <div className='underline'></div>
+      </div>
+      <div className='section-center featured'>
+        {firstThreeFeaturedPets.map((pet) => {
+          return <Pet key={pet.id} {...pet} />
+        })}
+      </div>
+      <Link to='/pets' className='btn'>
+        all pets
+      </Link>
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.section`
+  background: var(--clr-grey-10);
+  .featured {
+    margin: 4rem auto;
+    display: grid;
+    gap: 2.5rem;
+    img {
+      height: 225px;
+    }
+  }
+  .btn {
+    display: block;
+    width: 148px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  @media (min-width: 576px) {
+    .featured {
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    }
+  }
+`
+
+export default FeaturedPets

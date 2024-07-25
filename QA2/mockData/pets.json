@@ -1,0 +1,277 @@
+[
+  {
+      "id": "recZkNf2kwmdBcqd0",
+      "name": "Bella",
+      "age": {
+          "years": 2,
+          "months": 3
+      },
+      "species": "Dog",
+      "breed": "Labrador Retriever",
+      "gender": "Female",
+      "thumbnail":
+       "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+      "images": [
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
+      ],
+      "colors": [
+          "Brown",
+          "White"
+      ],
+      "description": "Bella was found wandering the streets alone, malnourished and scared. Our team took her in, provided her with medical care, and showered her with love. Now, she is a friendly and energetic dog who loves to play. She is looking for a loving home where she can get plenty of exercise and attention. Bella enjoys long walks and playing fetch. She gets along well with other dogs and is very gentle with children.",
+      "vaccinated": true,
+      "spayed_neutered": true,
+      "adoption_requirements": [
+          "A home with a yard",
+          "Experienced dog owners preferred",
+          "No cats"
+      ],
+      "personality_traits": [
+          "Friendly",
+          "Energetic",
+          "Loyal"
+      ]
+  },
+  {
+      "id": "recEHmzvupvT8ZONH",
+      "name": "Whiskers",
+      "age": {
+          "years": 3,
+          "months": 4
+      },
+      "species": "Cat",
+      "breed": "Domestic Shorthair",
+      "gender": "Female",
+      "thumbnail":
+       "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+      "images": [
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
+      ],
+      "colors": [
+          "Black",
+          "White"
+      ],
+      "description": "Whiskers was found in an abandoned building, hiding from the world. It took time and patience, but she gradually began to trust us. Whiskers is now a calm and affectionate cat who enjoys lounging in sunny spots and getting head scratches. She is perfect for a quiet home. Whiskers is very independent and prefers a peaceful environment. She would do best in a home without young children or other pets.",
+      "vaccinated": true,
+      "spayed_neutered": true,
+      "adoption_requirements": [
+          "Indoor only",
+          "Quiet home environment"
+      ],
+      "personality_traits": [
+          "Calm",
+          "Affectionate",
+          "Independent"
+      ]
+  },
+  {
+      "id": "rec5NBwZ5zCD9nfF0",
+      "name": "Max",
+      "age": {
+          "years": 1,
+          "months": 2
+      },
+      "species": "Dog",
+      "breed": "Golden Retriever",
+      "gender": "Male",
+      "thumbnail":
+       "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+      "images": [
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
+      ],
+      "colors": [
+          "Golden"
+      ],
+      "description": "Max was rescued from a neglectful situation where he was kept in a small cage. Despite his rough start, Max is a young and playful puppy with a lot of energy. He needs an active family who can keep up with his playful nature. Max loves running and playing with toys. He is very curious and loves exploring new places. Max would benefit from a family who can provide him with plenty of physical and mental stimulation.",
+      "vaccinated": true,
+      "spayed_neutered": false,
+      "adoption_requirements": [
+          "Active family",
+          "Daily exercise",
+          "Training experience preferred"
+      ],
+      "personality_traits": [
+          "Playful",
+          "Energetic",
+          "Curious"
+      ]
+  },
+  {
+      "id": "recd1jIVIEChmiwhe",
+      "name": "Luna",
+      "age": {
+          "years": 4,
+          "months": 6
+      },
+      "species": "Cat",
+      "breed": "Siberian",
+      "gender": "Female",
+      "thumbnail":
+       "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+      "images": [
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
+      ],
+      "colors": [
+          "Gray",
+          "White"
+      ],
+      "description": "Luna was found near a busy highway, dangerously close to traffic. After being rescued, she showed her gratitude with purrs and gentle headbutts. Luna is a beautiful and independent cat. She enjoys her alone time but also likes to cuddle on her own terms. Luna is very playful and loves chasing laser pointers. She would do well in a home with older children who understand her independent nature.",
+      "vaccinated": true,
+      "spayed_neutered": true,
+      "adoption_requirements": [
+          "Older children preferred",
+          "No other pets"
+      ],
+      "personality_traits": [
+          "Independent",
+          "Playful",
+          "Affectionate"
+      ]
+  },
+  {
+      "id": "recotY5Nh00DQFdkm",
+      "name": "Charlie",
+      "age": {
+          "years": 5,
+          "months": 1
+      },
+      "species": "Dog",
+      "breed": "German Shepherd",
+      "gender": "Male",
+      "thumbnail":
+       "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+      "images": [
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
+      ],
+      "colors": [
+          "Black",
+          "Brown"
+      ],
+      "description": "Charlie was left tied to our shelter's gate one night. He was scared and confused but soon warmed up to our staff. Charlie is a loyal and protective dog. He is well-behaved and trained, making him a great addition to any family. Charlie loves learning new tricks and is very obedient. He would do best in a home with a strong leader who can continue his training.",
+      "vaccinated": true,
+      "spayed_neutered": true,
+      "adoption_requirements": [
+          "Experienced dog owners",
+          "No small children",
+          "Secure yard"
+      ],
+      "personality_traits": [
+          "Loyal",
+          "Protective",
+          "Obedient"
+      ]
+  },
+  {
+      "id": "rec1Ntk7siEEW9ha1",
+      "name": "Daisy",
+      "age": {
+          "years": 6,
+          "months": 0
+      },
+      "species": "Dog",
+      "breed": "Beagle",
+      "gender": "Female",
+      "thumbnail":
+       "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+      "images": [
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
+      ],
+      "colors": [
+          "White",
+          "Black"
+      ],
+      "description": "Daisy was found wandering alone in a park, clearly having been lost for some time. Despite her initial shyness, she quickly became a favorite at the shelter. Daisy is a sweet and gentle dog. She loves children and would make a perfect family pet. Daisy enjoys long naps and cuddling with her favorite humans. She is very gentle and gets along well with other pets.",
+      "vaccinated": true,
+      "spayed_neutered": true,
+      "adoption_requirements": [
+          "Family with children",
+          "Fenced yard",
+          "Other pets welcome"
+      ],
+      "personality_traits": [
+          "Gentle",
+          "Affectionate",
+          "Sweet"
+      ]
+  },
+  {
+      "id": "recNZ0koOqEmilmoz",
+      "name": "Oliver",
+      "age": {
+          "years": 2,
+          "months": 7
+      },
+      "species": "Cat",
+      "breed": "Tabby",
+      "gender": "Male",
+      "thumbnail":
+       "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+      "images": [
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
+      ],
+      "colors": [
+          "Orange"
+      ],
+      "description": "Oliver was found in a storm drain, scared and hungry. Our team rescued him and provided him with the care he needed to recover. Oliver is now a curious and playful cat who loves exploring. He is always up for an adventure and enjoys interactive toys. Oliver is very social and enjoys the company of other cats. He would do well in a home with other pets.",
+      "vaccinated": true,
+      "spayed_neutered": true,
+      "adoption_requirements": [
+          "Indoor only",
+          "Other pets welcome"
+      ],
+      "personality_traits": [
+          "Curious",
+          "Playful",
+          "Social"
+      ]
+  },
+  {
+      "id": "recrfxv3EwpvJwvjq",
+      "name": "Ruby",
+      "age": {
+          "years": 4,
+          "months": 3
+      },
+      "species": "Dog",
+      "breed": "Cocker Spaniel",
+      "gender": "Female",
+      "thumbnail":
+       "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+      "images": [
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg",
+          "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTk2NzY3MjA5ODc0MjY5ODI2/top-10-cutest-cat-photos-of-all-time.jpg"
+      ],
+      "colors": [
+          "Red",
+          "White"
+      ],
+      "description": "Ruby was found abandoned at a local playground, tied to a bench. Despite this, she remains incredibly loving and affectionate. Ruby enjoys playing fetch and is very friendly with other dogs. She is looking for a family that will never leave her behind. Ruby loves water and enjoys swimming. She would be a great companion for an active family.",
+      "vaccinated": true,
+      "spayed_neutered": true,
+      "adoption_requirements": [
+          "Active family",
+          "Other dogs welcome",
+          "Secure yard"
+      ],
+      "personality_traits": [
+          "Loving",
+          "Affectionate",
+          "Friendly"
+      ]
+  }
+]
